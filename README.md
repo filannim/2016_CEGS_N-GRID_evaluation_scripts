@@ -1,4 +1,4 @@
-# 2016 CEGS N-GRID Track 1.B Evaluation Scripts
+# 2016 CEGS N-GRID Shared Tasks Evaluation Scripts
 
 This script is distributed as a part of the 2016 CEGS N-GRID tasks. 
 
