@@ -207,7 +207,7 @@ def get_document_dict_by_system_id(system_dirs):
             # Only look at xml files
             if fn.endswith("xml"):
                 sa = StandoffAnnotation(d + fn)
-                documents[sa.sys_id][sa.id] = sa            
+                documents[sa.sys_id][sa.id] = sa
 
     return documents
 
@@ -244,6 +244,7 @@ def evaluate(system, gs, eval_class, **kwargs):
 
     # Handle if two files were passed on the command line
     if os.path.isfile(system[0]) and os.path.isfile(gs):
+        print 'here1'
         gs = StandoffAnnotation(gs)
         s = StandoffAnnotation(system[0])
         e = eval_class({s.id: s}, {gs.id: gs}, **kwargs)
@@ -258,6 +259,7 @@ def evaluate(system, gs, eval_class, **kwargs):
     # evaluations. Error checking to ensure consistent files in each directory
     # will be handled by the evaluation class.
     elif all([os.path.isdir(s) for s in system]) and os.path.isdir(gs):
+        print 'here2'
         # Get a dict of gold standoff annotation indexed by id
         for fn in os.listdir(gs):
             sa = StandoffAnnotation(gs + fn)
@@ -269,6 +271,7 @@ def evaluate(system, gs, eval_class, **kwargs):
             evaluations.append(e)
 
     else:
+        print 'here3'
         Exception("Must pass file.xml file.xml  or [directory/]+ directory/"
                   "on command line!")
 
@@ -290,7 +293,7 @@ def evaluate_rdoc(gold_fld, syst_fld, verbose=False):
         """It returns the positive valence severity score from an XML document.
         """
         source = etree.parse(file_path)
-        score = source.findall('./TAGS/POS_VALENCE')[0].attrib['severity']
+        score = source.findall('./TAGS/POSITIVE_VALENCE')[0].attrib['score']
         score = score.upper().strip()
         if score in level2score.keys():
             return level2score[score]
@@ -392,9 +395,8 @@ if __name__ == "__main__":
     oneb_parser.add_argument('-v', '--verbose',
                              help="list full document by document scores",
                              action="store_true")
-    oneb_parser.add_argument("from_dirs",
-                             help="directories to pull documents from",
-                             nargs="+")
+    oneb_parser.add_argument("from_dir",
+                             help="directories to pull documents from")
     oneb_parser.add_argument("to_dir",
                              help="directories to save documents to")
 
@@ -412,7 +414,7 @@ if __name__ == "__main__":
 
     if args.track == 'track1':
         if args.filter:
-            evaluate(args.to_dir, args.from_dirs,
+            evaluate([args.to_dir], args.from_dir,
                      PHITrackEvaluation,
                      verbose=args.verbose,
                      invert=args.invert,
@@ -420,7 +422,9 @@ if __name__ == "__main__":
                      filters=[get_predicate_function(a, PHITag)
                               for a in args.filter.split(",")])
         else:
-            evaluate(args.to_dir, args.from_dirs, PHITrackEvaluation,
+            print [args.to_dir]
+            print args.from_dir
+            evaluate([args.to_dir], args.from_dir, PHITrackEvaluation,
                      verbose=args.verbose)
     else:
         evaluate_rdoc(os.path.abspath(args.gold_dir),

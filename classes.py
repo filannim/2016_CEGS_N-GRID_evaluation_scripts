@@ -7,11 +7,11 @@ from tags import PHITag
 
 
 class Token(object):
-    """ Class designed to encapsulate the idea of a token. This includes
-    the token itself, plus pre and post whitespace, as well as the start and
-    end positions of the token with-in the document that the token was parsed
-    out of. It also includes an 'index' attribute that can be set by external
-    functions and classes (see TokenSequence).
+    """ Class designed to encapsulate the idea of a token.
+    This includes the token itself, plus pre and post whitespace, as well as
+    the start and end positions of the token within the document that the token
+    was parsed out of. It also includes an 'index' attribute that can be set by
+    external functions and classes (see TokenSequence).
     """
     def __init__(self, token, pre_ws, post_ws, index, start, end):
         self.token = token
@@ -214,7 +214,7 @@ class StandoffAnnotation(object):
     information,  processing text and tags into objectsand coverting these
     objects back into XML elements,  dicts, files, token sequences etc.
     """
-    id_parser = re.compile(r'^(\d+)-(\d+)(.*)\.xml')
+    id_parser = re.compile(r'^(\d\d\d\d)_gs\.xml')
     ts_cls = TokenSequence
 
     def __init__(self, file_name=None, root="root"):
@@ -232,10 +232,9 @@ class StandoffAnnotation(object):
 
         if file_name:
             if self.id_parser.match(os.path.basename(file_name)):
-                self.patient_id, \
-                    self.record_id, \
-                    self.sys_id = self.id_parser.match(os.path.basename(file_name))\
-                                                .groups()
+                self.patient_id = '0'
+                self.record_id = self.id_parser.match(os.path.basename(file_name)).groups()[0]
+                self.sys_id = '0'
             else:
                 self.patient_id = os.path.splitext(os.path
                                                    .basename(file_name))[0]
