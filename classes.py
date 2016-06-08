@@ -578,7 +578,8 @@ class Evaluate(object):
     @staticmethod
     def F_beta(p, r, beta=1):
         try:
-            return (1 + beta**2) * ((p * r) / (p + r))
+            with numpy.errstate(all='ignore'):
+                return (1 + beta**2) * ((p * r) / (p + r))
         except ZeroDivisionError:
             return 0.0
 
