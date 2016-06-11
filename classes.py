@@ -633,7 +633,7 @@ class Evaluate(object):
                                  "",
                                  "{:.4}".format(Evaluate.F_beta(mp, mr))))
 
-            print("{:-<25}{:-<15}{:-<15}{:-<20}".format("", "", "", ""))
+            print("{:-<35}{:-<15}{:-<15}{:-<20}".format("", "", "", ""))
 
     def _print_summary(self):
         Mp, Mp_std = self.macro_precision()
@@ -641,34 +641,31 @@ class Evaluate(object):
         mp = self.micro_precision()
         mr = self.micro_recall()
 
-        str_fmt = "{:<25}{:<15}{:<15}{:<20}"
+        str_fmt = "{:<35}{:<15}{:<20}"
 
         print(str_fmt.format(self.sys_id +
                              " ({})".format(len(self.doc_ids)),
-                             "Measure", "Macro (SD)", "Micro (Primary)"))
+                             "Measure", "Micro (Primary)"))
 
-        print("{:-<25}{:-<15}{:-<15}{:-<20}".format("", "", "", ""))
+        print("{:-<35}{:-<15}{:-<20}".format("", "", "", ""))
 
         print(str_fmt.format("Total",
                              "Precision",
-                             "{:.4} ({:.2})".format(Mp, Mp_std),
                              "{:.4}".format(mp)))
 
         print(str_fmt.format("",
                              "Recall",
-                             "{:.4} ({:.2})".format(Mr, Mr_std),
                              "{:.4}".format(mr)))
 
         print(str_fmt.format("",
                              "F1",
-                             "{:.4}".format(Evaluate.F_beta(Mp, Mr)),
                              "{:.4}".format(Evaluate.F_beta(mr, mp))))
         print("\n")
 
     def print_docs(self):
         print("Report for {}:".format(self.sys_id))
-        print("{:<25}{:<15}{:<15}{:<20}".format("", "Measure", "", "Micro (Primary)"))
-        print("{:-<25}{:-<15}{:-<15}{:-<20}".format("", "", "", ""))
+        print("{:<35}{:<15}{:<20}".format("", "Measure", "Micro (Primary)"))
+        print("{:-<35}{:-<15}{:-<20}".format("", "", ""))
         self._print_docs()
 
     def print_report(self, verbose=False):

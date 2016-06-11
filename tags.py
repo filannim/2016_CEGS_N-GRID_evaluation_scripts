@@ -1,6 +1,11 @@
 ###############################################################################
 #
-#      This file manages all tag related classes and encapsulates much of the
+#   Copyright 2016 Michele Filannino
+#   
+#   Derivated from Christopher Kotfila's i2b2 evaluation scripts:
+#       https://github.com/kotfic/i2b2_evaluation_scripts
+#
+#    This file manages all tag related classes and encapsulates much of the
 #    functionality that the rest of this evaluation script works off of.
 #    It is based on a class hierarchy and most of the tag specific information
 #    is contained in tag specific class attributes. This has the advantage of

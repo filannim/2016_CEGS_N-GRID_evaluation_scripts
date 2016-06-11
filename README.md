@@ -63,32 +63,32 @@ $ python evaluate.py track1 {gold}/ {system}/
 Running one of these versions wil produce output that looks like this:
 
 ```
-Strict (521)             Measure        Macro (SD)     Micro               
+Strict (521)             Measure        Micro
+----------------------------------------------------------
+Total                    Precision      0.6537
+                         Recall         0.4988
+                         F1             0.5658
+
+
+Relaxed (521)            Measure        Micro
 ---------------------------------------------------------------------------
-Total                    Precision      0.6635 (0.11)  0.6537              
-                         Recall         0.4906 (0.12)  0.4988              
-                         F1             0.5641         0.5658              
+Total                    Precision      0.9047
+                         Recall         0.6903
+                         F1             0.7831
 
 
-Relaxed (521)            Measure        Macro (SD)     Micro               
+HIPAA Strict (521)       Measure        Micro
 ---------------------------------------------------------------------------
-Total                    Precision      0.8970 (0.086) 0.9047              
-                         Recall         0.6663 (0.15)  0.6903              
-                         F1             0.7646         0.7831              
+Total                    Precision      0.7225
+                         Recall         0.7225
+                         F1             0.7225
 
 
-HIPAA Strict (521)       Measure        Macro (SD)     Micro               
+HIPAA Relaxed (521)      Measure        Micro
 ---------------------------------------------------------------------------
-Total                    Precision      0.7406 (0.098) 0.7225              
-                         Recall         0.7406 (0.098) 0.7225              
-                         F1             0.7406         0.7225              
-
-
-HIPAA Relaxed (521)      Measure        Macro (SD)     Micro               
----------------------------------------------------------------------------
-Total                    Precision      1.0 (0.0)      1.0                 
-                         Recall         1.0 (0.0)      1.0                 
-                         F1             1.0            1.0                 
+Total                    Precision      1.0
+                         Recall         1.0
+                         F1             1.0
 ```
 
 A few notes to explain this output:
