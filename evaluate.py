@@ -324,9 +324,9 @@ def evaluate_rdoc(gold_fld, syst_fld, verbose=False):
             # In a scale (0, 1, 2, 3), the points 1 and 2 can lead to maximum
             # error 2. The points 0 and 3 can lead to maximum error 3.
             if score in (0, 3):
-                normalisation_factor = 3 * len(x_n)
+                normalisation_factor = 3
             else:
-                normalisation_factor = 2 * len(x_n)
+                normalisation_factor = 2
             # Compute micro-averaged MAE
             try:
                 result = 100 * (1 - (mean_absolute_error(x_n, y_n) / \
