@@ -1,7 +1,7 @@
 ###############################################################################
 #
 #   Copyright 2016 Michele Filannino
-#   
+#
 #   Derivated from Christopher Kotfila's i2b2 evaluation scripts:
 #       https://github.com/kotfic/i2b2_evaluation_scripts
 #
@@ -107,15 +107,19 @@
 
 
 import argparse
-from collections import defaultdict, Counter
+from collections import defaultdict
 import glob
 import os
-import sys
 import xml.etree.cElementTree as etree
+import warnings
 
 import numpy as np
+from scipy.stats import wilcoxon
 
-from classes import StandoffAnnotation, Evaluate, CombinedEvaluation, PHITrackEvaluation
+from classes import StandoffAnnotation
+from classes import Evaluate
+from classes import CombinedEvaluation
+from classes import PHITrackEvaluation
 from tags import PHITag
 
 
@@ -360,18 +364,24 @@ def evaluate_rdoc(gold_fld, syst_fld, verbose=False):
         print '{:10s} ({:>4d}|{:>4d}): {:>07.4f}%'.format(
             score2level[value].lower(), *stats[value])
     print '--------------------------------'
-    print 'SCORE      ({:>4d}|{:>4d}): {:>07.4f}%'.format(len(X), len(Y), score)
+    print 'SCORE      ({:>4d}|{:>4d}): {:>07.4f}%'.format(
+        len(X), len(Y), score)
 
     error_bar = lambda x, y: '*' * np.absolute(x - y)
 
     if verbose:
         print
         print
-        print '{:<12s} {:^6s} {:^6s}   {:<6s}'.format('RECORD NAME', 'GOLD', 
+        print '{:<12s} {:^6s} {:^6s}   {:<6s}'.format('RECORD NAME', 'GOLD',
                                                       'SYSTEM', 'ERROR')
         for pos, f in enumerate(sorted(glob.glob(gold_fld + '/*.xml'))):
             print '{:<12s} {:^6d} {:^6d}   {:<6s}'.format(
                 os.path.basename(f), X[pos], Y[pos], error_bar(X[pos], Y[pos]))
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            print 'Wilcoxon Signed-Rank test p-value: {:>07.7f}'.format(
+                wilcoxon(X, Y)[1])
 
 
 if __name__ == "__main__":
